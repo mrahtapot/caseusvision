@@ -101,7 +101,6 @@ export default function Home(props) {
                                     <li>Ev sahibinin detaylı oy dağılımını görmesi</li>
                                     <li>Kenar çubuğu</li>
                                     <li>Ayarlar: Ülke ismi değiştirme, dark/light mode</li>
-                                    <li>Ev sahibine linkleri kopyalama butonu</li>
                                     <li>Diskalifiy/Yarışma iptali durumlarında &quot;bunu yapmak istediğinize emin misiniz?&quot; ekranı</li>
                                     <li>Türkçe dil seçeneği</li>
                                     <li>Eski yarışmalara bakabilmek, filtreleyebilmek için arşiv</li>

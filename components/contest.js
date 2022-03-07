@@ -25,6 +25,8 @@ const Submission = (props) => {
 
             setAlreadySubmitted(false)
         })
+
+        console.log("useEffect Submission")
     }, [props])
 
     const submitSong = async () => {
@@ -50,7 +52,7 @@ const Submission = (props) => {
                     }
                 })
             } else if (querySnapshot.docs.length < 0) {
-                alert("An error occured!")
+                alert("An error occurred!")
             }
         })
     }
@@ -67,18 +69,26 @@ const Submission = (props) => {
                     link: link,
                 });
                 console.log(ref)
-                alert("Changed!")
                 router.reload()
+                alert("Changed!")
+                //TODO: When you change only the link it doesn't see the change? and there are problems that I fixed by reloading lol
             }  else if (querySnapshot.docs.length >= 1) {
                 querySnapshot.docs.map((song) => {
                     if (song.data().country !== props.country) {
                         alert("Song is already sent!")
+                    } else if (song.data().name === name && song.data().artist === artist && song.data().link === link) {
+                        alert("You should change the song before submitting it")
+                        router.reload()
+                    } else {
+                        alert("An error occurred!")
+                        router.reload()
                     }
                 })
-            } else if (querySnapshot.docs.length < 0) {
-                alert("An error occured!")
+            } else {
+                alert("An error occurred!")
             }
         })
+        return
     }
 
     useEffect(() => {
@@ -90,6 +100,7 @@ const Submission = (props) => {
             })
             setSongs(array)
         })
+        console.log("useEffect Submission 2")
     }, [props])
 
     const songItems = songs.map((song) => {
@@ -97,11 +108,23 @@ const Submission = (props) => {
             await deleteDoc(doc(db, "songs", "cv"+props.id+"-"+song.find(pair => pair[0] === 'country')[1]))
         }
 
+        const copyUrl =  () => {
+            navigator.clipboard.writeText(song.find(pair => pair[0] === 'link')[1])
+            alert("Link Copied")
+        }
+
+        const goToLink = () => {
+            window.open(
+                song.find(pair => pair[0] === 'link')[1], "_blank");
+        }
+
         return (
             <div key={song.id}>
                 {song.find(pair => pair[0] === 'country')[1]}-
                 {song.find(pair => pair[0] === 'artist')[1]}-
                 {song.find(pair => pair[0] === 'name')[1]}
+                <button onClick={copyUrl}>Copy Link</button>
+                <button onClick={goToLink}>Go to Link</button>
                 <button onClick={disqualify}>Disqualify</button>
             </div>
         )
@@ -157,16 +180,30 @@ const WaitForVoting = (props) => {
             setSongs(array)
             console.log(songs)
         })
-    }, [props, songs])
+
+        console.log("useEffect Wait for Voting")
+    }, [])
 
     const songItems = songs.map((song) => {
         const disqualify = async () => {
             await deleteDoc(doc(db, "songs", "cv"+props.id+"-"+song.find(pair => pair[0] === 'country')[1]))
         }
 
+        const copyUrl =  () => {
+            navigator.clipboard.writeText(song.find(pair => pair[0] === 'link')[1])
+            alert("Link Copied")
+        }
+
+        const goToLink = () => {
+            window.open(
+                song.find(pair => pair[0] === 'link')[1], "_blank");
+        }
+
         return (
             <div key={song.id}>
                 {song.find(pair => pair[0] === 'country')[1]}-{song.find(pair => pair[0] === 'artist')[1]}-{song.find(pair => pair[0] === 'name')[1]}
+                <button onClick={copyUrl}>Copy Link</button>
+                <button onClick={goToLink}>Go to Link</button>
                 <button onClick={disqualify}>Disqualify</button>
             </div>
         )
@@ -220,6 +257,8 @@ const Voting = (props) => {
             setSongs(array)
             setVotes(voteArray)
         })
+
+        console.log("useEffect Voting")
     }, [props])
 
     //counts the total vote count
@@ -229,6 +268,8 @@ const Voting = (props) => {
             voteCount = voteCount+vote.point
         })
         setTotalVotes(voteCount)
+
+        console.log("useEffect Voting 2")
     }, [votes])
 
     //checks if voted or not
@@ -249,6 +290,8 @@ const Voting = (props) => {
 
     useEffect(() => {
         checkIfAlreadyVoted()
+
+        console.log("useEffect Voting 3")
     }, [props, votes])
 
     const songItems = songs.map((song) => {
@@ -383,6 +426,8 @@ const WaitForResults = (props) => {
             })
             setSongs(array)
         })
+
+        console.log("useEffect Wait for Results")
     }, [props])
 
     const songItems = songs
@@ -431,6 +476,8 @@ const Results = (props) => {
         return () => {
             setSongs([])
         };
+
+        console.log("useEffect Results")
     }, [])
 
     //TODO: For some reason here some songs are returned as doubles
@@ -466,6 +513,8 @@ const Results = (props) => {
                 })
             setGivenVotes(givenVotesArray)
         })
+
+        console.log("useEffect Results 2")
     }, [props])
 
     const overallResults = songs
@@ -575,6 +624,8 @@ const Contest = (props) => {
                 }
             })
         })
+
+        console.log("useEffect Contest")
     }, [props, country, host, id, state])
 
     useEffect(()=>{
@@ -586,6 +637,8 @@ const Contest = (props) => {
                 }
             })
         })
+
+        console.log("useEffect Contest 2")
     },[country, id])
 
     const stateView = () => {
