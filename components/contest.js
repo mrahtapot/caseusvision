@@ -25,8 +25,6 @@ const Submission = (props) => {
 
             setAlreadySubmitted(false)
         })
-
-        console.log("useEffect Submission")
     }, [props])
 
     const submitSong = async () => {
@@ -100,7 +98,6 @@ const Submission = (props) => {
             })
             setSongs(array)
         })
-        console.log("useEffect Submission 2")
     }, [props])
 
     const songItems = songs.map((song) => {
@@ -180,8 +177,6 @@ const WaitForVoting = (props) => {
             setSongs(array)
             console.log(songs)
         })
-
-        console.log("useEffect Wait for Voting")
     }, [])
 
     const songItems = songs.map((song) => {
@@ -257,8 +252,6 @@ const Voting = (props) => {
             setSongs(array)
             setVotes(voteArray)
         })
-
-        console.log("useEffect Voting")
     }, [props])
 
     //counts the total vote count
@@ -268,8 +261,6 @@ const Voting = (props) => {
             voteCount = voteCount+vote.point
         })
         setTotalVotes(voteCount)
-
-        console.log("useEffect Voting 2")
     }, [votes])
 
     //checks if voted or not
@@ -290,8 +281,6 @@ const Voting = (props) => {
 
     useEffect(() => {
         checkIfAlreadyVoted()
-
-        console.log("useEffect Voting 3")
     }, [props, votes])
 
     const songItems = songs.map((song) => {
@@ -345,15 +334,17 @@ const Voting = (props) => {
         if(totalVotes===8) {
             votes.map(async (vote) => {
                 console.log(vote)
-                //TODO: AN ERROR HERE
+                //TODO: CALCULATION ERROR HERE!!!!
                 const ref1 = doc(db, "votes", "cv"+props.id+"-"+vote.from+"->"+vote.to);
                 await updateDoc(ref1, {
                     point: 0
-                });
-                await updateDoc(ref1, {
+                }).then(
+                    await updateDoc(ref1, {
                     point: vote.point
-                });})
-            await setOldVotes(oldVoteArray)
+                }).then(
+                        await setOldVotes(votes)
+                    )
+                )})
             alert("Vote changed!")
             router.reload()
         } else {
@@ -430,8 +421,6 @@ const WaitForResults = (props) => {
             })
             setSongs(array)
         })
-
-        console.log("useEffect Wait for Results")
     }, [props])
 
     const songItems = songs
@@ -480,8 +469,6 @@ const Results = (props) => {
         return () => {
             setSongs([])
         };
-
-        console.log("useEffect Results")
     }, [])
 
     //TODO: For some reason here some songs are returned as doubles
@@ -517,8 +504,6 @@ const Results = (props) => {
                 })
             setGivenVotes(givenVotesArray)
         })
-
-        console.log("useEffect Results 2")
     }, [props])
 
     const overallResults = songs
@@ -628,8 +613,6 @@ const Contest = (props) => {
                 }
             })
         })
-
-        console.log("useEffect Contest")
     }, [props, country, host, id, state])
 
     useEffect(()=>{
@@ -641,8 +624,6 @@ const Contest = (props) => {
                 }
             })
         })
-
-        console.log("useEffect Contest 2")
     },[country, id])
 
     const stateView = () => {
