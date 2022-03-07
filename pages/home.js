@@ -10,7 +10,7 @@ export default function Home(props) {
     const auth = getAuth();
     const user = auth.currentUser;
     const [country, setCountry] = useState("")
-    const [userState, setUserState] = useState("pending")
+    const [userState, setUserState] = useState("")
     const [numContests, setNumContests] = useState(0)
     const [activeContest, setActiveContest] = useState(false)
     const [contestInfo, setContestInfo] = useState({})
@@ -115,7 +115,13 @@ export default function Home(props) {
                     }
                 </div>
                 :
-                <div>Your account is still pending, please wait for the admin to accept you</div>
+                <div>
+                    {(userState === "pending") ?
+                        <div>Your account is still pending, please wait for the admin to accept you</div>
+                        :
+                        <div>Please wait</div>
+                    }
+                </div>
             }
             <button onClick={signOutClick}>Sign Out</button>
         </div>
