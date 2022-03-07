@@ -345,9 +345,11 @@ const Voting = (props) => {
         if(totalVotes===8) {
             votes.map(async (vote) => {
                 console.log(vote)
-                const ref1 = doc(db, "votes", "cv"+props.id+"-"+vote.from+"->"+vote.to);
-                await updateDoc(ref1, {
-                    point: vote.point
+                const docRef = await setDoc(doc(db, "votes", "cv"+props.id+"-"+vote.from+"->"+vote.to), {
+                    from: vote.from,
+                    to: vote.to,
+                    point: vote.point,
+                    contest: props.id
                 });})
             await setOldVotes(oldVoteArray)
             alert("Vote changed!")
