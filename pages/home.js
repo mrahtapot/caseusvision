@@ -93,20 +93,20 @@ export default function Home(props) {
 
                     <div>
                         Gelecekte eklenmesi planlanan özellikler:
-                        <li>
-                            <ul>Rastgele biri kaydolup yarışmaya katılamasın diye yarışmaya özel ilk şarkı gönderirken eklenecek bir yarışma şifresi? (Sizce gerek var mı, önemli mi?)</ul>
-                            <ul>Ev sahibinin detaylı oy dağılımını görmesi</ul>
-                            <ul>Kenar çubuğu</ul>
-                            <ul>Ayarlar: Ülke ismi değiştirme, dark/light mode</ul>
-                            <ul>Ev sahibine linkleri kopyalama butonu</ul>
-                            <ul>Diskalifiy/Yarışma iptali durumlarında &quot;bunu yapmak istediğinize emin misiniz?&quot; ekranı</ul>
-                            <ul>Türkçe dil seçeneği</ul>
-                            <ul>Eski yarışmalara bakabilmek, filtreleyebilmek için arşiv</ul>
-                            <ul>Spotify API ile şarkı linki konulduğunda direkt isim ve şarkıcının otomatik gelmesi</ul>
-                            <ul>Hatırlatma emaili</ul>
-                            <ul>Canlı sonuç takibi: Normal Eurovision gibi her ülkenin puanlarının tek tek gelmesi ve buna göre skorun değişmesi</ul>
-                            <ul>Beğendiğin şarkıları bir Spotify playlistine ekleme özelliği</ul>
-                        </li>
+                        <ul>
+                            <li>Rastgele biri kaydolup yarışmaya katılamasın diye yarışmaya özel ilk şarkı gönderirken eklenecek bir yarışma şifresi? (Sizce gerek var mı, önemli mi?)</li>
+                            <li>Ev sahibinin detaylı oy dağılımını görmesi</li>
+                            <li>Kenar çubuğu</li>
+                            <li>Ayarlar: Ülke ismi değiştirme, dark/light mode</li>
+                            <li>Ev sahibine linkleri kopyalama butonu</li>
+                            <li>Diskalifiy/Yarışma iptali durumlarında &quot;bunu yapmak istediğinize emin misiniz?&quot; ekranı</li>
+                            <li>Türkçe dil seçeneği</li>
+                            <li>Eski yarışmalara bakabilmek, filtreleyebilmek için arşiv</li>
+                            <li>Spotify API ile şarkı linki konulduğunda direkt isim ve şarkıcının otomatik gelmesi</li>
+                            <li>Hatırlatma emaili</li>
+                            <li>Canlı sonuç takibi: Normal Eurovision gibi her ülkenin puanlarının tek tek gelmesi ve buna göre skorun değişmesi</li>
+                            <li>Beğendiğin şarkıları bir Spotify playlistine ekleme özelliği</li>
+                        </ul>
                     </div>
                 </div>
             }

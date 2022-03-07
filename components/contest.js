@@ -646,13 +646,13 @@ const Contest = (props) => {
         <div>
             You are: {country}
             and you are the host? {isHost ? <div>yes</div>:<div>no</div>}
-            <li>
-                <ul key={id.id}>caseusvision {id}</ul>
-                <ul key={theme.id}>{theme}</ul>
-                <ul key={desc.id}>{desc}</ul>
-                <ul key={host.id}>{host}</ul>
-                <ul key={state.id}>{state}</ul>
-                <ul key={start.id}>{start}</ul>
+            <ul>
+                <li key={id.id}>caseusvision {id}</li>
+                <li key={theme.id}>{theme}</li>
+                <li key={desc.id}>{desc}</li>
+                <li key={host.id}>{host}</li>
+                <li key={state.id}>{state}</li>
+                <li key={start.id}>{start}</li>
                 {stateView()}
                 {isHost ?
                     <div>
@@ -666,7 +666,7 @@ const Contest = (props) => {
                     :
                     <div />
                 }
-            </li>
+            </ul>
         </div>
     );
 }
