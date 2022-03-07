@@ -90,6 +90,24 @@ export default function Home(props) {
                     <label>Theme</label>
                     <input onChange={(e) => setTheme(e.target.value)} />
                     <button onClick={createContest}>Create</button>
+
+                    <div>
+                        Gelecekte eklenmesi planlanan özellikler:
+                        <li>
+                            <ul>Rastgele biri kaydolup yarışmaya katılamasın diye yarışmaya özel ilk şarkı gönderirken eklenecek bir yarışma şifresi? (Sizce gerek var mı, önemli mi?)</ul>
+                            <ul>Ev sahibinin detaylı oy dağılımını görmesi</ul>
+                            <ul>Kenar çubuğu</ul>
+                            <ul>Ayarlar: Ülke ismi değiştirme, dark/light mode</ul>
+                            <ul>Ev sahibine linkleri kopyalama butonu</ul>
+                            <ul>Diskalifiy/Yarışma iptali durumlarında &quot;bunu yapmak istediğinize emin misiniz?&quot; ekranı</ul>
+                            <ul>Türkçe dil seçeneği</ul>
+                            <ul>Eski yarışmalara bakabilmek, filtreleyebilmek için arşiv</ul>
+                            <ul>Spotify API ile şarkı linki konulduğunda direkt isim ve şarkıcının otomatik gelmesi</ul>
+                            <ul>Hatırlatma emaili</ul>
+                            <ul>Canlı sonuç takibi: Normal Eurovision gibi her ülkenin puanlarının tek tek gelmesi ve buna göre skorun değişmesi</ul>
+                            <ul>Beğendiğin şarkıları bir Spotify playlistine ekleme özelliği</ul>
+                        </li>
+                    </div>
                 </div>
             }
             <button onClick={signOutClick}>Sign Out</button>
