@@ -20,7 +20,8 @@ export default function Register() {
             if (querySnapshot.docs.length === 0){
                 const docRef = await addDoc(collection(db, "users"), {
                     email : user.email,
-                    country : country
+                    country : country,
+                    state : "pending"
                 });
                 console.log("Document written with ID: ", docRef.id);
                 router.push("/home")

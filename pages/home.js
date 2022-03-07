@@ -10,6 +10,7 @@ export default function Home(props) {
     const auth = getAuth();
     const user = auth.currentUser;
     const [country, setCountry] = useState("")
+    const [userState, setUserState] = useState("pending")
     const [numContests, setNumContests] = useState(0)
     const [activeContest, setActiveContest] = useState(false)
     const [contestInfo, setContestInfo] = useState({})
@@ -24,6 +25,7 @@ export default function Home(props) {
             const unsubscribe = onSnapshot(q, async (querySnapshot) => {
                 console.log(querySnapshot.docs)
                 await setCountry(querySnapshot.docs[0].data().country)
+                await setUserState(querySnapshot.docs[0].data().state)
                 console.log(country)
             })
             return unsubscribe;
@@ -80,35 +82,40 @@ export default function Home(props) {
 
     return (
         <div className={styles.container}>
-            {activeContest ?
-                <Contest id={id} info={contestInfo} user={user} isHost={isHost} setActiveContest={setActiveContest}/>
-                :
+            {(userState === "accepted") ?
                 <div>
-                    <h3>Create A Contest</h3>
-                    <label>Description</label>
-                    <input onChange={(e) => setDesc(e.target.value)} />
-                    <label>Theme</label>
-                    <input onChange={(e) => setTheme(e.target.value)} />
-                    <button onClick={createContest}>Create</button>
+                    {activeContest ?
+                        <Contest id={id} info={contestInfo} user={user} isHost={isHost} setActiveContest={setActiveContest}/>
+                        :
+                        <div>
+                            <h3>Create A Contest</h3>
+                            <label>Description</label>
+                            <input onChange={(e) => setDesc(e.target.value)} />
+                            <label>Theme</label>
+                            <input onChange={(e) => setTheme(e.target.value)} />
+                            <button onClick={createContest}>Create</button>
 
-                    <div>
-                        Gelecekte eklenmesi planlanan özellikler:
-                        <ul>
-                            <li>Rastgele biri kaydolup yarışmaya katılamasın diye yarışmaya özel ilk şarkı gönderirken eklenecek bir yarışma şifresi? (Sizce gerek var mı, önemli mi?)</li>
-                            <li>Ev sahibinin detaylı oy dağılımını görmesi</li>
-                            <li>Kenar çubuğu</li>
-                            <li>Ayarlar: Ülke ismi değiştirme, dark/light mode</li>
-                            <li>Ev sahibine linkleri kopyalama butonu</li>
-                            <li>Diskalifiy/Yarışma iptali durumlarında &quot;bunu yapmak istediğinize emin misiniz?&quot; ekranı</li>
-                            <li>Türkçe dil seçeneği</li>
-                            <li>Eski yarışmalara bakabilmek, filtreleyebilmek için arşiv</li>
-                            <li>Spotify API ile şarkı linki konulduğunda direkt isim ve şarkıcının otomatik gelmesi</li>
-                            <li>Hatırlatma emaili</li>
-                            <li>Canlı sonuç takibi: Normal Eurovision gibi her ülkenin puanlarının tek tek gelmesi ve buna göre skorun değişmesi</li>
-                            <li>Beğendiğin şarkıları bir Spotify playlistine ekleme özelliği</li>
-                        </ul>
-                    </div>
+                            <div>
+                                <ul>
+                                    Gelecekte eklenmesi planlanan özellikler:
+                                    <li>Ev sahibinin detaylı oy dağılımını görmesi</li>
+                                    <li>Kenar çubuğu</li>
+                                    <li>Ayarlar: Ülke ismi değiştirme, dark/light mode</li>
+                                    <li>Ev sahibine linkleri kopyalama butonu</li>
+                                    <li>Diskalifiy/Yarışma iptali durumlarında &quot;bunu yapmak istediğinize emin misiniz?&quot; ekranı</li>
+                                    <li>Türkçe dil seçeneği</li>
+                                    <li>Eski yarışmalara bakabilmek, filtreleyebilmek için arşiv</li>
+                                    <li>Spotify API ile şarkı linki konulduğunda direkt isim ve şarkıcının otomatik gelmesi</li>
+                                    <li>Hatırlatma emaili</li>
+                                    <li>Canlı sonuç takibi: Normal Eurovision gibi her ülkenin puanlarının tek tek gelmesi ve buna göre skorun değişmesi</li>
+                                    <li>Beğendiğin şarkıları bir Spotify playlistine ekleme özelliği</li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
                 </div>
+                :
+                <div>Your account is still pending, please wait for the admin to accept you</div>
             }
             <button onClick={signOutClick}>Sign Out</button>
         </div>
