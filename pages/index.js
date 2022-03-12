@@ -8,7 +8,6 @@ import {db} from "../firebase";
 export default function index() {
     const auth = getAuth();
     const user = auth.currentUser;
-    //TODO: Sidebar with user info from where every page can get the country
     //const [country, setCountry] = useState("")
 
     auth.onAuthStateChanged(async (user)=>{

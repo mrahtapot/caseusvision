@@ -3,6 +3,8 @@ import {collection, onSnapshot, query, doc, updateDoc, deleteDoc, where, Timesta
 import {db} from "../firebase";
 import router from "next/router";
 
+//TODO: Stop sending data in useEffect, move total point to voting, make sure voting doesn't send too many writes
+
 const Submission = (props) => {
     const [link, setLink] = useState("")
     const [name, setName] = useState("")
@@ -253,6 +255,7 @@ const Voting = (props) => {
             setVotes(voteArray)
         })
     }, [props])
+    //TODO: Check if you should do something else than props
 
     //counts the total vote count
     useEffect(() => {
@@ -264,7 +267,7 @@ const Voting = (props) => {
     }, [votes])
 
     //checks if voted or not
-    const checkIfAlreadyVoted = async () => {
+    useEffect(() => {
         const q = query(collection(db, "votes"), where("from", "==", props.country), where("contest", "==", props.id))
         const unsubscribe = onSnapshot(q, async (querySnapshot) => {
             if (querySnapshot.docs.length >= 1){
@@ -277,13 +280,11 @@ const Voting = (props) => {
 
             setAlreadyVoted(false)
         })
-    }
-
-    useEffect(() => {
-        checkIfAlreadyVoted()
     }, [props, votes])
 
-    const songItems = songs.map((song) => {
+    const songItems = songs
+        .sort((a, b) => b.find(pair => pair[0] === 'artist')[1]-a.find(pair => pair[0] === 'artist')[1])
+        .map((song) => {
         if (song.find(pair => pair[0] === 'country')[1] === props.country) {
             return (
                 <div key={song.id}>
@@ -312,44 +313,53 @@ const Voting = (props) => {
         }
     });
 
-    const vote = async () => {
+    const vote = () => {
         if(totalVotes===8) {
             votes.map(async (vote) => {
-                console.log(vote)
                 const docRef = await setDoc(doc(db, "votes", "cv"+props.id+"-"+vote.from+"->"+vote.to), {
                     from: vote.from,
                     to: vote.to,
                     point: vote.point,
                     contest: props.id
-                });})
-            await setOldVotes(oldVoteArray)
-            alert("Submitted!")
-            router.reload()
+                })})
+            setOldVotes(votes)
         } else {
             alert("Please make sure you send exactly 8 points")
         }
     }
 
     const changeVote = async () => {
+        //TODO: WEIRD ERRORS HERE
+        if(totalVotes===8) {
+            votes.map(async (votee) => {
+                deleteVote(votee)
+                vote()
+            })
+        }
+        /*
         if(totalVotes===8) {
             votes.map(async (vote) => {
                 console.log(vote)
-                //TODO: CALCULATION ERROR HERE!!!!
                 const ref1 = doc(db, "votes", "cv"+props.id+"-"+vote.from+"->"+vote.to);
                 await updateDoc(ref1, {
-                    point: 0
-                }).then(
-                    await updateDoc(ref1, {
                     point: vote.point
                 }).then(
-                        await setOldVotes(votes)
-                    )
-                )})
+                    setOldVotes(votes)
+                )
+            })
+
+            console.log(oldVotes)
             alert("Vote changed!")
             router.reload()
         } else {
             alert("Please make sure you send exactly 8 points")
         }
+
+         */
+    }
+
+    const deleteVote = async (vote) => {
+        await deleteDoc(doc(db, "votes", "cv"+props.id+"-"+vote.from+"->"+vote.to))
     }
 
     const songItemsHost = songs
@@ -563,8 +573,6 @@ const Contest = (props) => {
     const [userParticipated, setUserParticipated] = useState(false)
     const [isHost, setIsHost] = useState(false)
     const [cancelButton, setCancelButton] = useState(false)
-
-    //TODO: Host in voting, wait for results, results: see the detailed votes table
 
     useEffect(() => {
         setId(props.id)
