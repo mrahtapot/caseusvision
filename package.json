@@ -10,7 +10,7 @@
   "dependencies": {
     "@firebase/database": "^0.12.5",
     "firebase": "^9.6.6",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "next": "12.0.10",
     "react": "17.0.2",
     "react-dom": "17.0.2",
